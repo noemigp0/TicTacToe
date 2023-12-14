@@ -8,35 +8,59 @@ public class Main {
      *the array will be a char array, which is a character array, and I'll call it POS  short for positions
 
      * */
+
+    Scanner scanner= new Scanner(System.in);
+    static int position;
     public static void main(String[] args) {
         char[] positions = {'T',' ',' ',' ',' ',' ',' ',' ',' '};
 
         System.out.println("***TIC-TAC-TOE***");
 
 
-       char algo = positions[0];
 
 
         for (int i = 0; i < positions.length; i++){
-          String  playerNumber = i%2 == 0 ?  "1" : "2";
-          int positionNumber = askingTicTacToePosition(playerNumber);
-            if (String.valueOf(positions[positionNumber]).equals("X") || String.valueOf(positions[positionNumber]).equals("Y")){
-                System.out.println("Position isn't available try again. ");
-                positionNumber = askingTicTacToePosition(playerNumber);
-            }
-            positions[positionNumber]=playerNumber.equals("1") ? 'X' : 'Y';
+          char  player = i%2 == 0 ?  'X' : 'O';
+
+
+          int positionNumber;
+          do {
+              positionNumber = askingTicTacToePosition(player);
+          } while (positions[positionNumber] == 'X' || positions[positionNumber] == 'O');
+
+            positions[positionNumber]=player;
             showingChart(positions);
+            if ((positions[0] == player && positions[1] == player && positions[2] == player) ||
+                    (positions[3] == player && positions[4] == player && positions[5] == player) ||
+                    (positions[6] == player && positions[7] == player && positions[8] == player)  ||
+                    (positions[0] == player && positions[3] == player && positions[6] == player) ||
+                    (positions[1] == player && positions[4] == player && positions[7] == player) ||
+                     (positions[2] == player && positions[5] == player && positions[8] == player) ||
+                    (positions[0] == player && positions[4] == player && positions[8] == player) ||
+                    (positions[2] == player && positions[4] == player && positions[6] == player)
+            ){
+                System.out.println(player+ " is the Winner");
+                break;
+
+            }
+
+
+
         }
 
+        //i > 3
 
 
     }
 
-    static int askingTicTacToePosition(String playerNumber){
+
+    static int askingTicTacToePosition(char playerNumber){
+
 
         System.out.println("Player " + playerNumber + "! Type the position:");
         Scanner scanner= new Scanner(System.in);
-        int position = scanner.nextInt() -1;
+        position = scanner.nextInt() -1;
+
         return position;
     }
 
@@ -50,14 +74,3 @@ public class Main {
 }
 
 
-/*
-Asking the user the position number
-Store the position number
-Replace the position number by X
-Print the tic-tac-toe chart updated
-Asking the second player the position number
-Store the position number
-Replace the position number by O
-Print the tic-tac-toe chart updated
-Asking the second player the position number
- */
